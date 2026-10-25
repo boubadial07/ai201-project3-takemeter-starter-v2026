@@ -51,65 +51,45 @@ whether you hit them:
 
 ---
 
-## 1.
 
-<!-- Your criterion. It must name a number. -->
+## 1. Overall accuracy
 
+The trained classifier will achieve at least **0.60 overall accuracy** on the held-out test set across all three evaluation seeds.
 
-
-**Why this target:**
-
-
+**Why this target:** There are three labels, so a roughly balanced random guesser would achieve about 0.33 accuracy. A target of 0.60 requires a meaningful improvement over that baseline without assuming a small dataset will produce near-perfect results.
 
 ---
 
-## 2.
+## 2. Per-label performance
 
-<!-- Your criterion. -->
+Each label will achieve an **F1 score of at least 0.50** on the held-out set across all three evaluation seeds.
 
-
-
-**Why this target:**
-
-
+**Why this target:** `analysis`, `hot_take`, and `reaction` can overlap when a comment contains both an opinion and an emotion. Requiring a minimum F1 score for every label helps prevent strong performance on `analysis` from hiding poor recognition of the other two labels. This target may need revisiting if a label has very few test examples, but it must not be lowered merely because the model misses it.
 
 ---
 
-## 3.
+## 3. Label balance
 
-<!-- Your criterion. -->
+The largest label in the final labeled dataset will contain **no more than twice as many examples as the smallest label**.
 
-
-
-**Why this target:**
-
-
+**Why this target:** `analysis` comments are relatively easy to find because gaming discussions often include explanations and comparisons. Short `reaction` comments may be less common in the examples collected so far. Limiting the imbalance reduces the risk that the model mostly learns the most common label.
 
 ---
 
-## 4.
+## 4. Annotation consistency
 
-<!-- Your criterion. -->
+A second reviewer will agree with my assigned label on at least **80% of a sample of 20 posts**.
 
-
-
-**Why this target:**
-
-
+**Why this target:** The hardest boundary in this taxonomy is between `hot_take` and `reaction`. Checking agreement on 20 posts can reveal whether the decision rule is clear enough for another person to apply consistently. If a second reviewer is unavailable, this criterion cannot be measured as written.
 
 ---
 
-## 5.
+## 5. Confidence calibration
 
-<!-- Your criterion. -->
+Among predictions with confidence scores of **at least 0.80**, at least **80% will be correct** on the held-out set, provided there are at least 10 such predictions.
 
+**Why this target:** A confident prediction should be more trustworthy than an uncertain one. Because the taxonomy includes ambiguous comments and the dataset is expected to be small, I want to check whether high-confidence predictions are actually reliable rather than treating confidence as proof of correctness.
 
-
-**Why this target:**
-
-
-
----
 
 <!-- ─────────────────────────────────────────────────────────────────────────
      UNIT 6 — read this before you change anything above.
