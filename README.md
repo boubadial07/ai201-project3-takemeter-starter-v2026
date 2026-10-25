@@ -48,11 +48,40 @@
 
 ## Label Taxonomy
 
-<!-- Each label: a one-sentence definition and two real examples from your
-     reading. Then your decision rule for the hardest boundary.
 
-     The decision rule is worth a point on its own and it's the thing most
-     people leave out. Every taxonomy has a hardest boundary. Name yours. -->
+
+### 1. `analysis`
+A post that primarily evaluates or explains a game using specific reasons, examples, observations, or comparisons.
+
+- **Example 1 — Everspace (`Angzt`):** "The dogfights are pretty arcadey with quick maneuvers, a bunch of weapon types, and special abilities. The first is a roguelite, but the second is not. Both (but especially the second) have a bunch of well-hidden loot in their areas (often behind small puzzles) which can take a while to find."
+- **Example 2 — Racing game (`Moopies`):** "I relieved myself of a lot of stress once I accepted that there are more builds than "Go fastest, make best turns" that will win a race. It's overall more fun, and the variety is something that keeps me coming back."
+
+### 2. `hot_take`
+A post that primarily makes a strong evaluative judgment without providing meaningful supporting reasons or examples.
+
+- **Example 1 — NieR: Automata (`SunnyWynter`):** "Definitely agree with you on Nier Automata. The game is just really bland in terms of gameplay and story."
+- **Example 2 — Superman 64 (`Make_It_Plain`):** "Been playing Superman 64 for about a week now. Suffice it to say, I think it's one of the greatest games ever made."
+
+These are candidate examples because the comments make strong judgments without explaining them in detail. The Superman 64 comment may be sarcastic, but the screenshot alone does not establish that.
+
+### 3. `reaction`
+A post that primarily expresses an immediate emotion or personal response rather than developing a reasoned evaluation.
+
+- **Example 1 — amazinglover (sentence excerpt):** "I absolutely hate this game."
+- **Example 2 — frostysnow:** "looks awesome, can't wait to try it"
+
+The first example is the opening sentence of a longer comment that later expresses conflicting feelings. The second primarily communicates excitement and anticipation.
+
+### Decision Rule: Choosing the Primary Purpose
+
+Classify each post by its primary purpose, rather than by every feature it contains.
+
+- Use `analysis` when the author explains an evaluation with specific reasons, examples, observations, or comparisons.
+- Use `hot_take` when the author makes a strong evaluative judgment without meaningful supporting reasoning in the comment.
+- Use `reaction` when the main purpose is to express an immediate emotion or personal response.
+
+The hardest boundary is between `hot_take` and `reaction`. A strong statement about whether a game is good or bad is usually `hot_take` when it makes an unsupported evaluation. A statement primarily expressing excitement, frustration, sadness, or joy is `reaction`. When a comment combines several purposes, choose the label that best represents its main purpose.
+
 
 ### `label_one`
 
