@@ -212,15 +212,19 @@ of next unit's variance. -->
 
 ## Baseline vs. Trained
 
-<!-- Both models on the same posts. `python baseline.py --trained results.json`
-     prints this table for you. -->
+## Baseline vs. Trained
+
+The baseline model achieved an overall accuracy of 0.364 and a macro F1 score of 0.308. My fine-tuned DistilBERT model achieved an accuracy of 0.455, an improvement of 0.091. However, its macro F1 decreased by 0.100.
 
 | Measure | Baseline | Trained | Difference |
-|---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+|---|---:|---:|---:|
+| Overall accuracy | 0.364 | 0.455 | +0.091 |
+| Macro F1 | 0.308 | 0.208 | -0.100 |
+| F1 — `analysis` | 0.118 | 0.625 | +0.507 |
+| F1 — `hot_take` | 0.308 | 0.000 | -0.308 |
+| F1 — `reaction` | 0.500 | 0.000 | -0.500 |
+
+The fine-tuned model performed better on `analysis`, but struggled to identify `hot_take` and `reaction`. This suggests that fine-tuning improved recognition of one category without learning reliable boundaries across all three labels.
 
 **What I predicted before I looked:**
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
