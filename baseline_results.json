@@ -1,0 +1,199 @@
+{
+  "model": "facebook/bart-large-mnli",
+  "n": 33,
+  "seed": 42,
+  "held_out": true,
+  "used_definitions": true,
+  "scores": {
+    "n": 33,
+    "accuracy": 0.36363636363636365,
+    "f1_macro": 0.308446455505279,
+    "per_label": {
+      "analysis": {
+        "precision": 0.5,
+        "recall": 0.06666666666666667,
+        "f1": 0.11764705882352941,
+        "support": 15
+      },
+      "hot_take": {
+        "precision": 0.3333333333333333,
+        "recall": 0.2857142857142857,
+        "f1": 0.30769230769230765,
+        "support": 7
+      },
+      "reaction": {
+        "precision": 0.36,
+        "recall": 0.8181818181818182,
+        "f1": 0.5,
+        "support": 11
+      }
+    }
+  },
+  "predictions": [
+    {
+      "text": "This game is nowhere near as good as people make it sound.",
+      "gold": "hot_take",
+      "predicted": "reaction"
+    },
+    {
+      "text": "I been playing Tales of series, Trails of cold steel saga, Tokyo Xanadu and other but tales and trails have earned my respect and gratitude for so long I don't where I be I thank god for all",
+      "gold": "reaction",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Still playing slay the spire, but slowly chipping away at Hollow Knight 1 and reached game completion screen 75% after 23H. Didnt feel i missed that much, but apparently it goes above 100% for full completion",
+      "gold": "analysis",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "Finally trying to finish up Lies of P. But I haven't touched it in more than a year and a half so I'm a bit rusty lol.",
+      "gold": "reaction",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "Modern gaming needs fewer massive maps and more meaningful content.",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "medal of honor allied assault. Nostalgia hits hard man..",
+      "gold": "reaction",
+      "predicted": "reaction"
+    },
+    {
+      "text": "To be fair, the game is hated for its size - not it being a bad game.",
+      "gold": "analysis",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Grindstone, just the perfect game to play when listening to music or when having small breaks at work.",
+      "gold": "analysis",
+      "predicted": "reaction"
+    },
+    {
+      "text": "I suspect you'll love Alan Wake 2.",
+      "gold": "reaction",
+      "predicted": "reaction"
+    },
+    {
+      "text": "finished jill's route and now wrapping up chris's route and gotta say this is an awesome game and i'm kicking myself for never playing it before now",
+      "gold": "reaction",
+      "predicted": "reaction"
+    },
+    {
+      "text": "35 hours deep into fire emblem FW. My goodness, what a game.",
+      "gold": "hot_take",
+      "predicted": "reaction"
+    },
+    {
+      "text": "One of the all-time greats.",
+      "gold": "hot_take",
+      "predicted": "reaction"
+    },
+    {
+      "text": "I'm planning to play that next! Going to go OG Control -> AW2 -> Control: Resonant.",
+      "gold": "reaction",
+      "predicted": "reaction"
+    },
+    {
+      "text": "You need to do the side quests - they're quite fun and actually require some thinking!!! It's worth getting up to space too.",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Wow you got downvoted to hell for what's literally a mainstream opinion about MKW's openworld lol.",
+      "gold": "reaction",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "I finally played the original Silent Hill 2 last week. I still prefer the remake, but the OG is still very good and absolutely worth checking out. Just started Silent Hill 3.",
+      "gold": "analysis",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Combolands is a game that I want to gush about in any place people will look. It's a roguelike citybuilder that's cribbing a lot more from Balatro than Against the Storm. It's all about placing tiles so that they synergize with each other and making adjustments on the fly. Just a lovely little $10 indie.",
+      "gold": "analysis",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Right now playing .hack gu last recode, planning to play many jrpg games, old and new",
+      "gold": "reaction",
+      "predicted": "reaction"
+    },
+    {
+      "text": "A game does not become a masterpiece just because it is old.",
+      "gold": "hot_take",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "Playing two remakes atm. Dragon Quest 3 during break hours at work, perfect mindless grinding and Trails in the Sky at home.",
+      "gold": "reaction",
+      "predicted": "reaction"
+    },
+    {
+      "text": "I am glad we are seeing some wipeout-like games recently. Fast fusion on switch 2 is great too but it needs a better soundtrack and some missiles.",
+      "gold": "analysis",
+      "predicted": "reaction"
+    },
+    {
+      "text": "i played the original years ago and besides major story beats i've really forgotten a lot of it, it's been a real treat going through the story again and seeing my favorite scenes transitioned to 3D",
+      "gold": "analysis",
+      "predicted": "reaction"
+    },
+    {
+      "text": "The original was never that impressive to begin with.",
+      "gold": "hot_take",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "I put it on Story difficulty and I'm enjoying the hell out of it now that enemies aren't damage sponges.",
+      "gold": "analysis",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Playing Cronos The New dawn and loving it! Really great atmosphere and cool story that has me thinking after Im done playing",
+      "gold": "analysis",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Ball x Pit has been absorbing my life. True \"one more run\" kind of Roguelike with so many whack combinations of balls to do some nutty things",
+      "gold": "analysis",
+      "predicted": "reaction"
+    },
+    {
+      "text": "So obviously been playing Halo: Campaign Evolved. Been eyeballing Black Myth Wukong. But what are some games worth buying if your a big Halo, Gears of War, Fable, i even enjoyed Avowed quite a bit? Is Black Myth good?",
+      "gold": "analysis",
+      "predicted": "reaction"
+    },
+    {
+      "text": "After bouncing off it last year I think I finally clicked with NG4 and my god it's pure adrenaline when you get into the flow of combat. Still suck ass on the regular difficulty though.",
+      "gold": "analysis",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Resident Evil 5 and 6 when? They're actually the only ones I finished in the series.",
+      "gold": "reaction",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Bought zero company and resonance a plague tale legacy, and one is quite polished and one is quite unpolished",
+      "gold": "analysis",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "Thanks for the recommendation! I'll definitely check it out when I have some downtime.",
+      "gold": "reaction",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Another banger indie FPS I'm thinking",
+      "gold": "hot_take",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Same. Once I figured out the rules of combat (move, action, and bonus action), it clicked for me. Can't stop thinking about it.",
+      "gold": "analysis",
+      "predicted": "reaction"
+    }
+  ]
+}
