@@ -39,16 +39,10 @@
 
 ## What This Does
 
-<!-- Your community, and what your classifier sorts posts into. Three or four
-     sentences. -->
-
-
-
+TakeMeter is a text classification project focused on gaming community discussions. It uses a fine-tuned DistilBERT model to classify gaming-related comments into three categories: analysis, hot_take, and reaction. The classifier distinguishes between comments that provide reasoning, strong opinions without supporting explanations, and immediate emotional responses. The goal is to explore how effectively a machine learning model can identify the primary purpose of gaming-related comments.
 ---
 
 ## Label Taxonomy
-
-
 
 ### 1. `analysis`
 A post that primarily evaluates or explains a game using specific reasons, examples, observations, or comparisons.
@@ -82,34 +76,13 @@ Classify each post by its primary purpose, rather than by every feature it conta
 
 The hardest boundary is between `hot_take` and `reaction`. A strong statement about whether a game is good or bad is usually `hot_take` when it makes an unsupported evaluation. A statement primarily expressing excitement, frustration, sadness, or joy is `reaction`. When a comment combines several purposes, choose the label that best represents its main purpose.
 
+**Which two labels are easiest to confuse?**
 
-### `label_one`
-
-**Definition:**
-
-**Example 1:**
->
-
-**Example 2:**
->
-
-### `label_two`
-
-**Definition:**
-
-**Example 1:**
->
-
-**Example 2:**
->
-
-### The hardest boundary
-
-**Which two labels:**
+`hot_take` and `reaction` are the easiest to confuse because both can use strong or emotional language. I distinguish them by purpose: `hot_take` expresses an evaluative opinion or judgment, while `reaction` primarily expresses an immediate personal emotion or response.
 
 **The decision rule I used every time:**
-<!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
-     if the tone is heated." -->
+
+I asked whether the post primarily explains or supports an evaluation, expresses an opinion without meaningful supporting reasoning, or communicates an immediate emotional response. I assigned the label that best represented the post's primary purpose rather than relying only on its tone.
 
 
 
@@ -117,91 +90,117 @@ The hardest boundary is between `hot_take` and `reaction`. A strong statement ab
 
 ## The Dataset
 
-<!-- Where you collected from, how you labelled, your counts, and three hard
-     cases. -->
-
 **Where the posts came from:**
 
-**How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
-Say so plainly — the disclosure is required, not penalised. -->
+The dataset contains 219 gaming-related examples. I manually collected 201 comments from Reddit and added 18 synthetic examples with AI assistance to improve the representation of the categories. I reviewed the examples and applied my classification rules before including them in the final dataset.
+
+**How I labeled them:**
+
+I reviewed the comments and assigned each one to one of three categories: `analysis`, `hot_take`, or `reaction`, based on its primary purpose. I also used ChatGPT as an AI-assisted resource during the dataset development process, including sharing comments and discussing classification decisions. The final labels were reviewed and organized into the dataset.
 
 **Counts per label:**
 
 | Label | Count | Share |
-|---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+|---|---:|---:|
+| analysis | 99 | 45.2% |
+| hot_take | 70 | 32.0% |
+| reaction | 50 | 22.8% |
+| **Total** | **219** | **100%** |
+
+**Data split:**
+
+The 219 labeled examples were divided into three sets:
+
+| Dataset | Number of posts |
+|---|---:|
+| Training | 153 |
+| Validation | 33 |
+| Testing | 33 |
+| **Total** | **219** |
+
+**Label distribution across splits:**
+
+| Label | Training | Validation | Testing |
+|---|---:|---:|---:|
+| analysis | 69 | 15 | 15 |
+| hot_take | 35 | 8 | 7 |
+| reaction | 49 | 10 | 11 |
+
+**Note:** The `hot_take` category has only 7 examples in the test set. Metrics for this category may vary considerably between random seeds because of the small sample size.
 
 **Three hard cases**
 
-<!-- Any post that made you pause: what it was, which two labels it could have
-     been, and what you chose. These are worth more than the easy 190. -->
+1. Nier: Automata
+October 25, 2026 · Username: SunnyWynter
+“Definitely agree with you on Nier Automata. The game is just really bland in terms of gameplay and story.”
 
-**1.**
-> *The post:*
->
-> *Could have been:*
->
-> *I chose, because:*
+- Candidate label: hot_take
+- Could have been: analysis
+- Why: It makes a strong negative evaluation, but doesn't provide supporting examples or detailed reasoning.
+2. Superman 64
+October 25, 2026 · Username: Make_It_Plain
+“Been playing Superman 64 for about a week now. Suffice it to say, I think it’s one of the greatest games ever made.”
 
-**2.**
-> *The post:*
->
-> *Could have been:*
->
-> *I chose, because:*
+- Candidate label: hot_take
+- Could have been: reaction
+- Why: It expresses a strong evaluation. However, the wording may be sarcastic, so the intended meaning is uncertain without more context.
+3. Gaming excitement
+October 25, 2026 · Username: frostysnow
+“looks awesome, can't wait to try it”
 
-**3.**
-> *The post:*
->
-> *Could have been:*
->
-> *I chose, because:*
+- Candidate label: reaction
+- Could have been: hot_take
+- Why: It primarily communicates excitement and anticipation rather than an argument or evaluation supported by reasoning.
 
 ---
 
 ## The Training Run
 
-<!-- Your starting model, your settings, and anything you changed and why. -->
+**Base model:** `distilbert-base-uncased`
 
-**Base model:**
+**Model type:** Fine-tuned DistilBERT sequence classifier with three output labels: `analysis`, `hot_take`, and `reaction`.
 
-**Settings:** <!-- epochs, learning rate, batch size, seed -->
+**Training configuration:**
+- Epochs: 3
+- Learning rate: `2e-5`
+- Batch size: 16
+- Maximum sequence length: 128 tokens
 
 **Anything I changed from the defaults, and why:**
 
-**Split sizes:** <!-- train / val / test, and per-label counts in the test
-split. If a label had fewer than about 8 in test, say so — it explains a lot
-of next unit's variance. -->
+For the initial training run, I used the starter project's default training configuration. During Unit 6, I introduced class-weighted loss as an improvement to address the model's difficulty recognizing the underrepresented `hot_take` category. The class weights gave greater importance to categories with fewer training examples during optimization.
 
+**Split sizes:**
 
+- Training: 153 posts
+- Validation: 33 posts
+- Testing: 33 posts
+- Total: 219 posts
+The test set contains only 7 `hot_take` examples, which can contribute to metric variability across random seeds.
 
 ---
 
 ## How I Used AI
 
-<!-- Two specific moments — what you asked, what came back, what you changed.
+I used ChatGPT as an AI-assisted resource during dataset development. I shared Reddit comments in the conversation, discussed classification decisions, and received suggestions for additional `hot_take` examples. I reviewed the suggested comments and manually assigned their final labels using my classification rules.
 
-     ⚠️ Plus disclosure of any pre-labelling. If you had a model pre-label a
-     batch and then read and corrected every one, say that. It's an allowed
-     workflow and disclosing it costs you nothing. Not disclosing it is the
-     problem. -->
+AI assistance supported the data collection and labeling process, but I remained responsible for reviewing the examples, applying the classification rules, and preparing the final dataset.
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- **What I asked for:** Help distinguishing between `hot_take` and `reaction` when classifying gaming comments.
+- **What came back:** ChatGPT explained how to distinguish strong evaluative opinions from immediate emotional responses.
+- **What I changed:** I applied the distinction to the comments and made the final labeling decisions based on each comment's primary purpose.
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- **What I asked for:** Additional gaming-related examples that could represent the `hot_take` category.
+- **What came back:** ChatGPT suggested additional comments and examples.
+- **What I changed:** I reviewed the suggestions, evaluated whether they fit my taxonomy, and manually assigned the final labels.
 
 **Pre-labelling disclosure:**
+
+I used ChatGPT during the initial dataset development and labeling process. I shared Reddit comments and received AI assistance with suggesting and discussing category labels. I reviewed the suggestions, applied my classification rules, and made the final labeling decisions. Some additional `hot_take` examples were also suggested by ChatGPT and manually reviewed before being included in the dataset.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
@@ -209,8 +208,6 @@ of next unit's variance. -->
      ═══════════════════════════════════════════════════════════════════ -->
 
 ---
-
-## Baseline vs. Trained
 
 ## Baseline vs. Trained
 
@@ -226,130 +223,91 @@ The baseline model achieved an overall accuracy of 0.364 and a macro F1 score of
 
 The fine-tuned model performed better on `analysis`, but struggled to identify `hot_take` and `reaction`. This suggests that fine-tuning improved recognition of one category without learning reliable boundaries across all three labels.
 
-**What I predicted before I looked:**
-<!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
-     prediction made afterwards isn't one. -->
+**My Expected Outcome (Retrospective)**
+
+Before reviewing the results, I expected the fine-tuned DistilBERT model to outperform the baseline because it was trained specifically on my gaming-related dataset and custom classification categories. I also expected `analysis` to be easier to recognize than `hot_take` and `reaction`, since analysis comments often contain more descriptive language and supporting details.
 
 **What the gap actually means:**
-<!-- If the baseline matched your trained model, your fine-tuning added
-     nothing — and that is a real finding, not a failure. Say it plainly. -->
 
-
+Fine-tuning improved overall accuracy from 0.364 to 0.455, but macro F1 decreased from 0.308 to 0.208. The model improved substantially at identifying `analysis`, but failed to correctly identify `hot_take` and `reaction` in this initial run. This shows that improving overall accuracy does not necessarily mean the model performs well across every category. The results also suggest that the model struggled with distinguishing between the three labels, especially categories with fewer examples.
 
 ---
 
 ## Run Log — Before
 
-<!-- Five criteria across three seeds. The notebook's section 6 prints the
-     spread table; the Target and Verdict columns are yours. -->
-
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
-|---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+|---|---|---:|---:|---:|---|
+| 1. Overall accuracy | ≥ 0.60 | 0.455 | 0.515 | 0.545 | FAIL |
+| 2. Every label F1 | ≥ 0.50 | Not all met | Not all met | Not all met | FAIL |
+| 3. Largest label ≤ 2× smallest | ≤ 2:1 | 1.98:1 | 1.98:1 | 1.98:1 | PASS |
+| 4. Second reviewer agreement | ≥ 80% | Not measured | Not measured | Not measured | NOT MEASURED |
+| 5. High-confidence accuracy | ≥ 80% | Not measured | Not measured | Not measured | NOT MEASURED |
 
-### Confusion matrix
+### Summary
 
-<!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
-     An image of a matrix earns nothing. -->
+The dataset met the original label-balance requirement with a ratio of 1.98:1. However, the initial model still struggled to classify the labels consistently, particularly hot_take.
 
-| true \ predicted |  |  |  |
-|---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+**Confusion Matrix — Before Improvement (Seed 42)**
 
-**My biggest off-diagonal number, and what it means:**
-<!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
-     direction. "7 real analysis posts were called hot_take and only 3 went the
-     other way" is a direction, not just an error rate. -->
+| Actual \ Predicted | analysis | hot_take | reaction |
+|---|---:|---:|---:|
+| analysis | 15 | 0 | 0 |
+| hot_take | 7 | 0 | 0 |
+| reaction | 11 | 0 | 0 |
 
+The original model predicted every test example as `analysis`.
 
+It correctly classified 15 of 15 analysis posts but failed to identify any hot_take or reaction posts.
+
+This shows that the original model strongly favored the analysis category and struggled to distinguish between the three labels.
 
 ---
 
 ## Verdicts and Diagnoses
 
-<!-- MET or MISSED against LAST UNIT's target. The target has to hold across
-     all three seeds, not turn up sometimes. -->
+| # | Criterion | Target | Before | After | Verdict |
+|---|---|---|---|---|---|
+| 1 | Overall accuracy | ≥ 0.60 across all seeds | 0.455–0.545 | 0.576–0.788 | FAIL |
+| 2 | Per-label performance | Every label F1 ≥ 0.50 | Not met | `hot_take` failed in Seeds 42 and 7 | FAIL |
+| 3 | Label balance | Largest class ≤ 2× smallest | 1.98:1 | 1.98:1 | PASS |
+| 4 | Annotation consistency | ≥ 80% agreement on 20 posts | Not measured | 100% on 30 staff-labeled posts | PASS |
+| 5 | Confidence calibration | ≥ 80% correct at confidence ≥ 0.80, with at least 10 predictions | Not measured | Not measured at the required threshold | UNMEASURED |
 
-| # | Criterion | Target | Verdict | How I decided |
-|---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+### Diagnoses
 
-**Diagnoses**
+1. **Overall accuracy:** Class weighting improved accuracy across all three seeds. However, Seed 42 reached only 0.576, which remained below the original 0.60 target.
 
-<!-- For each miss: the cause, and how you know. The four common causes are:
-     too few examples for a label, a boundary you applied inconsistently, a
-     genuinely hard label pair, and a task the model can't reach from this
-     much data.
+2. **Per-label performance:** Analysis and reaction consistently exceeded the 0.50 F1 target after improvement. Hot_take remained below the target in Seeds 42 and 7, with F1 scores of 0.250 and 0.444. This suggests that hot_take remains the most difficult category for the model to recognize consistently.
 
-     ⚠️ Use your agreement report as evidence. It is the only instrument you
-     have that can tell a LABELLING problem from a MODEL problem, and this
-     section is graded on whether you used it that way. -->
+3. **Label balance:** The dataset contains 99 analysis, 70 hot_take, and 50 reaction examples. The largest class is 1.98 times the smallest, meeting the original balance requirement.
 
+4. **Annotation consistency:** I achieved 100% agreement with the staff reference labels across all 30 posts. This exceeds the numerical 80% target, although the comparison used staff-provided reference labels rather than a separately documented independent reviewer. It provides evidence that I applied the written taxonomy consistently across this sample.
 
+5. **Confidence calibration:** The model produced zero predictions with confidence scores of at least 0.80 across all three evaluation seeds. Because the original criterion requires at least 10 high-confidence predictions, the accuracy at this threshold could not be calculated. This suggests that the model's predictions were generally not confident enough to satisfy the required threshold. The criterion remains unmeasured rather than passed.
+
+### Overall assessment
+
+Class-weighted training substantially improved the model's performance. Average accuracy increased from approximately 50.5% to 69.7%, and average macro F1 increased from approximately 29.6% to 64.0%. However, the model still struggles to classify hot_take consistently, and its confidence calibration needs further evaluation.
 
 ---
 
 ## Agreement Report
 
-<!-- Your rate against the staff set, and every disagreement adjudicated.
+**Agreement rate:** 30 / 30 = 100%
 
-     Remember you labelled these 30 under the STAFF taxonomy in
-     data/staff_taxonomy.md, not your own — so every argument below is made
-     from those definitions and those decision rules. -->
-
-**Agreement rate:** ___ / 30 = ___%
-
-<!-- Nobody grades this number. A 60% who argues every disagreement from the
-     stated rules beats a 95% who wrote "staff was right" nine times. Several
-     of the 30 were chosen because they're genuinely ambiguous — you should be
-     winning some of these. -->
+I compared my labels against the staff labels using `agreement.py`. All 30 posts matched the staff labels, with no disagreements.
 
 **Disagreements**
 
-<!-- Three lines each: the post, both labels, and who you think is right and
-     why — grounded in the staff definitions you were both applying.
+There were no disagreements to adjudicate.
 
-     Then sort each into one of three piles:
-       (a) the rule covered it and I applied it loosely → a consistency problem
-       (b) the rule genuinely doesn't say               → a gap in the definitions
-       (c) the rule is ambiguous here and my reading is defensible → argue it.
-           This is a legitimate win.
+**Interpretation**
 
-     Pile (a) is the one that matters most for your diagnosis: if you applied a
-     written rule two different ways on 30 posts, that is direct evidence about
-     what you did across your own 200. -->
+I matched the staff taxonomy on all 30 posts. This suggests that I applied the written definitions consistently across this sample. The examples were relatively straightforward to classify, although this result does not guarantee that every borderline case in my original dataset was labeled consistently.
 
-**1.**
-> *The post:*
->
-> *Staff said / I said:*
->
-> *My call, and why:*
->
-> *Which pile:*
+**Disagreement analysis**
 
-**2.**
-> *The post:*
->
-> *Staff said / I said:*
->
-> *My call, and why:*
->
-> *Which pile:*
-
-**What the pattern in my disagreements tells me:**
-
-
+There were no disagreements in the 30-post comparison, so there were no cases to adjudicate or categorize into the three piles. As a result, this sample provides no direct evidence of labeling inconsistencies, gaps in the taxonomy, or ambiguous decisions. I will still consider potential labeling inconsistencies when diagnosing the model's performance on my larger dataset.
 
 ---
 
@@ -357,40 +315,59 @@ The fine-tuned model performed better on `analysis`, but struggled to identify `
 
 **What I changed:**
 
+I changed the training process to use class-weighted loss. I calculated weights based on the number of examples in each class and applied them through `WeightedTrainer` and `CrossEntropyLoss`. This gave greater importance to classes with fewer training examples, rather than allowing the model to favor the more common class.
+
 **Which diagnosis pointed at it:**
+
+The earlier evaluation showed that the model struggled to recognize `hot_take` and frequently predicted other labels instead. The confusion matrix also showed that the original model predicted every test example as `analysis` for Seed 42. These results suggested that the model was favoring the more common class and needed to pay more attention to underrepresented labels.
 
 ### Run Log — After
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
-|---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+|---|---|---:|---:|---:|---|
+| 1. Overall accuracy | ≥ 0.60 | 0.576 | 0.727 | 0.788 | **Miss** |
+| 2. Every label F1 (lowest label) | ≥ 0.50 | 0.250 | 0.444 | 0.667 | **Miss** |
+| 3. Label balance | Largest ≤ 2× smallest | — | — | — | **Met (1.98:1)** |
+| 4. Annotation agreement | ≥ 80% | — | — | — | **Met (30/30 = 100%)** |
+| 5. Confidence calibration | ≥ 80% accuracy at confidence ≥ 0.80, with at least 10 predictions | 0 predictions | 0 predictions | 0 predictions | **Not measurable** |
+
+### Confusion Matrix — After Improvement (Seed 42)
+
+| Actual \ Predicted | analysis | hot_take | reaction |
+|---|---:|---:|---:|
+| analysis | 9 | 0 | 6 |
+| hot_take | 3 | 1 | 3 |
+| reaction | 2 | 0 | 9 |
+
+The weighted model correctly classified 9 of 15 analysis posts, 1 of 7 hot_take posts, and 9 of 11 reaction posts.
+
+The largest confusion was 6 actual analysis posts classified as reaction, compared with 2 actual reaction posts classified as analysis. This indicates that the model still has difficulty distinguishing some analysis posts from reaction posts.
+
+Unlike the original model, which predicted every test example as analysis for Seed 42, the weighted model produced predictions across all three categories. However, hot_take remains particularly difficult to classify correctly.
 
 **Did it help, and how do I know:**
 
-<!-- If it didn't, say so. Relabelling that didn't help is a genuinely
-     interesting result and earns full credit. -->
+Yes, class weighting improved the model's performance compared with the original unweighted model. The original three-seed results had accuracy scores of 0.455, 0.515, and 0.545, while the weighted model achieved 0.576, 0.727, and 0.788.
 
+The weighted model also began producing predictions across all three categories instead of predicting every test example as `analysis` in the original Seed 42 evaluation. However, the improvement was not enough to meet every acceptance criterion. The `hot_take` F1 score remained below 0.50 for two seeds, and the confidence criterion could not be measured because no predictions reached 0.80 confidence.
 
+Overall, class weighting was a useful improvement, but the results show that the model still needs better examples and clearer distinctions between the three categories.
 
 ---
 
 ## What's Still Broken
 
-<!-- For each criterion still missed: what you'd do, and why you stopped. -->
+Although class weighting improved the model's performance, some problems remain.
 
+1. **Inconsistent overall accuracy:** Seed 42 achieved only 0.576 accuracy, below my 0.60 target. Seeds 7 and 2024 performed better, with accuracy scores of 0.727 and 0.788. This variation shows that the model's performance depends on the evaluation seed.
 
+2. **Difficulty identifying `hot_take`:** The `hot_take` F1 score was 0.250 for Seed 42 and 0.444 for Seed 7, both below my 0.50 target. Seed 2024 reached 0.667. The model still struggles to distinguish unsupported confident opinions from analysis and reactions.
 
-**The gap between what I meant my labels to capture and what the model
-learned:**
-<!-- Two sentences. Your confusion matrix is the evidence. -->
+3. **Low prediction confidence:** None of the three seeds produced predictions with confidence of at least 0.80. Therefore, I could not verify whether high-confidence predictions meet my 80% accuracy target.
 
+4. **Remaining confusion between labels:** The Seed 42 confusion matrix shows that six actual `analysis` posts were classified as `reaction`. This suggests that the distinction between evidence-based arguments and personal reactions still needs improvement.
 
-
-<!-- ═════════════════════════════════════════════════════════════════════
+The weighted-loss improvement helped the classifier recognize more than one category and improved overall performance. However, the results are not consistent across all seeds, and `hot_take` remains the most difficult category. More carefully reviewed training examples, especially borderline `hot_take` examples, may help improve the model.
 
      SUBMISSION CHECKLIST — unit 5
 
