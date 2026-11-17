@@ -225,7 +225,7 @@ The fine-tuned model performed better on `analysis`, but struggled to identify `
 
 **My Expected Outcome (Retrospective)**
 
-Before reviewing the results, I expected the fine-tuned DistilBERT model to outperform the baseline because it was trained specifically on my gaming-related dataset and custom classification categories. I also expected `analysis` to be easier to recognize than `hot_take` and `reaction`, since analysis comments often contain more descriptive language and supporting details.
+In retrospect, I would have expected the fine-tuned DistilBERT model to outperform the baseline because it was trained specifically on my gaming-related dataset and custom classification categories. I also would have expected analysis to be easier to recognize than hot_take and reaction, since analysis comments often contain more descriptive language and supporting details.
 
 **What the gap actually means:**
 
@@ -270,7 +270,7 @@ This shows that the original model strongly favored the analysis category and st
 | 1 | Overall accuracy | ≥ 0.60 across all seeds | 0.455–0.545 | 0.576–0.788 | FAIL |
 | 2 | Per-label performance | Every label F1 ≥ 0.50 | Not met | `hot_take` failed in Seeds 42 and 7 | FAIL |
 | 3 | Label balance | Largest class ≤ 2× smallest | 1.98:1 | 1.98:1 | PASS |
-| 4 | Annotation consistency | ≥ 80% agreement on 20 posts | Not measured | 100% on 30 staff-labeled posts | PASS |
+| 4 | Annotation consistency | ≥ 80% agreement on 20 posts | Not measured | 100% on 30 staff-labeled posts | PARTIAL |
 | 5 | Confidence calibration | ≥ 80% correct at confidence ≥ 0.80, with at least 10 predictions | Not measured | Not measured at the required threshold | UNMEASURED |
 
 ### Diagnoses
@@ -328,7 +328,7 @@ The earlier evaluation showed that the model struggled to recognize `hot_take` a
 | 1. Overall accuracy | ≥ 0.60 | 0.576 | 0.727 | 0.788 | **Miss** |
 | 2. Every label F1 (lowest label) | ≥ 0.50 | 0.250 | 0.444 | 0.667 | **Miss** |
 | 3. Label balance | Largest ≤ 2× smallest | — | — | — | **Met (1.98:1)** |
-| 4. Annotation agreement | ≥ 80% | — | — | — | **Met (30/30 = 100%)** |
+| 4. Annotation agreement | ≥ 80% | — | — | — | 100% staff reference agreement |
 | 5. Confidence calibration | ≥ 80% accuracy at confidence ≥ 0.80, with at least 10 predictions | 0 predictions | 0 predictions | 0 predictions | **Not measurable** |
 
 ### Confusion Matrix — After Improvement (Seed 42)
